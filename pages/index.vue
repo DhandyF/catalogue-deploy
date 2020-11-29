@@ -6,8 +6,8 @@
     <div class="product">
       <div v-for="i in 7" :key="i" class="product-card">
         <img class="product-image" src="~/assets/images/kaos-polos1.jpg" alt="kaos polos">
-        <div class="product-desc">
-          <div class="product-title">
+        <div class="product-attr">
+          <div class="product-name">
             Kaos Polos Screamous
           </div>
           <div class="product-price">
@@ -16,16 +16,26 @@
         </div>
       </div>
     </div>
+    <transition name="home">asd</transition>
   </div>
 </template>
 
 <script>
 export default {
-  layout: 'catalog'
+  layout: 'catalog',
+  transition: 'home'
 }
 </script>
 
 <style>
+.home-enter-active, .home-leave-active {
+  transition: opacity .5s;
+}
+
+.home-enter, .home-leave-active {
+  opacity: 0;
+}
+
 .catalog-container {
   margin: 0 auto;
   display: flex;
@@ -86,7 +96,7 @@ export default {
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
 }
 
-.product-image {
+.product-card .product-image {
   width: 100%;
   height: 170px;
   margin: 0;
@@ -94,19 +104,19 @@ export default {
   border-radius: 10px 10px 0 0;
 }
 
-.product-desc {
+.product-card .product-attr {
   margin: 0;
   padding: 10px;
 }
 
-.product-title {
+.product-attr .product-name {
   margin: 0 0 10px 0;
   font-family: 'Quicksand-SemiBold', sans-serif;
   color: darkslategrey;
   font-size: 17px;
 }
 
-.product-price {
+.product-attr .product-price {
   font-family: 'Quicksand-Bold', sans-serif;
   color: #FA591D;
   font-size: 18px;

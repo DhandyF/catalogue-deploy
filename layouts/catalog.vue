@@ -3,9 +3,7 @@
     <nav-bar />
     <div class="container">
       <div class="content">
-        <div class="sidebar">
-          <p>Filter</p>
-        </div>
+        <side-bar />
         <div class="catalog">
           <Nuxt />
         </div>
@@ -14,7 +12,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -34,6 +32,7 @@ html {
   width: 100%;
   margin: 60px 0 0 0;
   padding: 0 70px;
+  /* border: 1px solid black; */
 }
 
 .content {
@@ -41,11 +40,6 @@ html {
   margin: 0;
   padding: 0;
   display: flex;
-  /* border: 1px solid black; */
-}
-
-.sidebar {
-  width: 240px;
   /* border: 1px solid black; */
 }
 

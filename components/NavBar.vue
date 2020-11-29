@@ -4,7 +4,7 @@
       Catalogue
     </nuxt-link>
     <nav>
-      <nuxt-link to="/">
+      <nuxt-link to="/product/detail">
         Home
       </nuxt-link>
     </nav>

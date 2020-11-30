@@ -1,41 +1,116 @@
 <template>
   <div class="catalog-container">
     <div class="search-bar">
-      <input type="text" placeholder="Search product" name="search">
+      <input v-model="search" type="text" placeholder="Search product" name="search">
+      <a id="search-clear-icon" @click="clearSearch">&#10006;</a>
     </div>
     <div class="product">
-      <div v-for="i in 7" :key="i" class="product-card">
-        <img class="product-image" src="~/assets/images/kaos-polos1.jpg" alt="kaos polos">
+      <div v-for="product in productsFilter" :key="product.id" class="product-card">
+        <img :src="product.primaryImage" alt="product image" class="product-image">
         <div class="product-attr">
           <div class="product-name">
-            Kaos Polos Screamous
+            {{ product.name }}
           </div>
           <div class="product-price">
-            Rp.30.000
+            Rp. {{ product.price }}
           </div>
         </div>
       </div>
     </div>
-    <transition name="home">asd</transition>
   </div>
 </template>
 
 <script>
 export default {
   layout: 'catalog',
-  transition: 'home'
+  data () {
+    return {
+      search: '',
+      products: [
+        {
+          id: 1,
+          name: 'Kaos Polos Screamos',
+          price: '50.000',
+          primaryImage: require('~/assets/images/kaos-polos.jpg'),
+          images: [],
+          color: [
+            {
+              name: 'Black',
+              image: ''
+            }
+          ],
+          category: 't-shirt'
+        },
+        {
+          id: 2,
+          name: 'Kaos Polos',
+          price: '30.000',
+          primaryImage: require('~/assets/images/kaos-polos1.jpg'),
+          images: [],
+          color: [
+            {
+              name: 'Black',
+              image: ''
+            }
+          ],
+          category: 't-shirt'
+        },
+        {
+          id: 3,
+          name: 'Redknot Navi',
+          price: '30.000',
+          primaryImage: require('~/assets/images/shoes-redknot.jpg'),
+          images: [],
+          color: [
+            {
+              name: 'Navi',
+              image: ''
+            }
+          ],
+          category: 'shoes'
+        }
+      ],
+      productsFilter: []
+    }
+  },
+  watch: {
+    search () {
+      if (this.search === '') {
+        this.productsFilter = this.products
+      } else {
+        this.searchProduct()
+      }
+      this.showClearIcon()
+    }
+  },
+  mounted () {
+    this.productInit()
+  },
+  methods: {
+    productInit () {
+      this.productsFilter = this.products
+    },
+    searchProduct () {
+      this.productsFilter = this.products.filter(prod =>
+        prod.name.toLowerCase().includes(this.search.toLowerCase())
+      )
+    },
+    showClearIcon () {
+      const clearIcon = document.getElementById('search-clear-icon')
+      if (this.search === '') {
+        clearIcon.style.display = ''
+      } else {
+        clearIcon.style.display = 'flex'
+      }
+    },
+    clearSearch () {
+      this.search = ''
+    }
+  }
 }
 </script>
 
 <style>
-.home-enter-active, .home-leave-active {
-  transition: opacity .5s;
-}
-
-.home-enter, .home-leave-active {
-  opacity: 0;
-}
-
 .catalog-container {
   margin: 0 auto;
   display: flex;
@@ -43,6 +118,8 @@ export default {
 }
 
 .search-bar {
+  display: flex;
+  align-items: center;
   width: 100%;
   margin: 0 0 30px 0;
   /* border: 1px solid green; */
@@ -51,6 +128,7 @@ export default {
 .search-bar input {
   width: 100%;
   padding: 5px 10px;
+  margin-right: 10px;
   font-size: 15px;
   font-family: 'Quicksand', sans-serif;
   border: 1px solid lightgrey;
@@ -70,6 +148,25 @@ export default {
   border: 1px solid lightgrey;
   /* border-radius: 0 5px 5px 0; */
   background-size: 20px 20px;
+}
+
+#search-clear-icon {
+  display: none;
+  cursor: pointer;
+  width: auto;
+  padding: 3px 6px;
+  color: rgba(0, 0, 0, .5);
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.6s ease;
+  border-radius: 50px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  background-color: rgba(92, 64, 80, .1);
+}
+
+#search-clear-icon:hover {
+  background-color: rgba(92, 64, 80, .3);
 }
 
 .product {

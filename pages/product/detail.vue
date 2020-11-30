@@ -44,11 +44,11 @@
           Rp. 30.000
         </div>
       </div>
-      <div class="product-variant">
+      <div class="product-color">
         <div class="label">
           Color
         </div>
-        <div class="variant">
+        <div class="color">
         </div>
       </div>
       <div class="product-desc">
@@ -163,7 +163,7 @@ export default {
   border-bottom: 1px solid lightgrey;
 }
 
-.product-price, .product-variant, .product-desc {
+.product-price, .product-color, .product-desc {
   width: 100%;
   padding: 20px 0;
   display: flex;

@@ -1,7 +1,12 @@
 <template>
   <div class="sidebar">
-    <div class="filter-title">
-      Filter
+    <div class="filter-header">
+      <div class="filter-title">
+        Filter
+      </div>
+      <button v-show="showClearFilter" class="filter-clear-btn" @click="clearCategory">
+        Clear
+      </button>
     </div>
     <div class="filter">
       <div id="category-label" class="label" @click="showCategoryFilter">
@@ -9,13 +14,13 @@
         <a id="category-expand-icon" class="expand-icon">&#10094;</a>
       </div>
       <div id="category-item">
-        <div class="category">
+        <div class="category" @click="changeCategory('t-shirt')">
           T-shirt
         </div>
-        <div class="category">
+        <div class="category" @click="changeCategory('jacket')">
           Jacket
         </div>
-        <div class="category">
+        <div class="category" @click="changeCategory('shoes')">
           Shoes
         </div>
       </div>
@@ -26,9 +31,11 @@
         <a id="price-expand-icon" class="expand-icon">&#10094;</a>
       </div>
       <div id="price-item">
-        <input class="price" type="number" placeholder="Minimum price (Rp)" name="minimum-price">
-        <input class="price" type="number" placeholder="Maximum price (Rp)" name="maximum-price">
-        <button class="price-button">Apply</button>
+        <input v-model="minPrice" class="price" type="number" placeholder="Minimum price (Rp)" name="minimum-price">
+        <input v-model="maxPrice" class="price" type="number" placeholder="Maximum price (Rp)" name="maximum-price">
+        <button class="price-button" @click="applyPriceFilter">
+          Apply
+        </button>
       </div>
     </div>
   </div>
@@ -38,8 +45,30 @@
 export default {
   data () {
     return {
+      category: '',
+      minPrice: null,
+      maxPrice: null
+      // showClearFilter: false
     }
   },
+  computed: {
+    showClearFilter () {
+      if (this.category !== '' || this.minPrice !== null || this.maxPrice !== null) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+  // watch: {
+  //   category () {
+  //     if (this.category !== '') {
+  //       this.showClearFilter = true
+  //     } else {
+  //       this.showClearFilter = false
+  //     }
+  //   }
+  // },
   methods: {
     showCategoryFilter () {
       const catLabel = document.getElementById('category-label')
@@ -77,6 +106,22 @@ export default {
         element.style.removeProperty('transform')
         element.style.transform = 'rotate(270deg)'
       }
+    },
+    changeCategory (category) {
+      this.category = category
+      this.$store.dispatch('storeCategory', category)
+    },
+    applyPriceFilter () {
+      this.$store.dispatch('storeMinPrice', this.minPrice)
+      this.$store.dispatch('storeMaxPrice', this.maxPrice)
+    },
+    clearCategory () {
+      this.category = ''
+      this.minPrice = null
+      this.maxPrice = null
+      this.$store.dispatch('removeCategory')
+      this.$store.dispatch('removeMinPrice')
+      this.$store.dispatch('removeMaxPrice')
     }
   }
 }
@@ -95,13 +140,40 @@ export default {
   /* border: 1px solid yellow; */
 }
 
-.filter-title {
+.filter-header {
   margin: 0 0 10px 0;
   padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgrey;
+}
+
+.filter-title {
   font-family: 'Quicksand-Bold', sans-serif;
   font-size: 17px;
   color: #3A152A;
-  border-bottom: 1px solid lightgrey;
+}
+
+.filter-clear-btn {
+  margin: 0;
+  padding: 5px 10px;
+  font-family: 'Quicksand-SemiBold', sans-serif;
+  display: inline-block;
+  border-radius: 10px;
+  border: none;
+  color: #3A152A;
+  background-color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.filter-clear-btn:hover {
+  background-color: lightgrey;
+}
+
+.filter-clear-btn:focus {
+  outline: none;
 }
 
 .filter {

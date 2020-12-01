@@ -30,7 +30,7 @@ export default {
         {
           id: 1,
           name: 'Kaos Polos Screamos',
-          price: '50.000',
+          price: 50000,
           primaryImage: require('~/assets/images/kaos-polos.jpg'),
           images: [],
           color: [
@@ -44,7 +44,7 @@ export default {
         {
           id: 2,
           name: 'Kaos Polos',
-          price: '30.000',
+          price: 30000,
           primaryImage: require('~/assets/images/kaos-polos1.jpg'),
           images: [],
           color: [
@@ -58,7 +58,7 @@ export default {
         {
           id: 3,
           name: 'Redknot Navi',
-          price: '30.000',
+          price: 150000,
           primaryImage: require('~/assets/images/shoes-redknot.jpg'),
           images: [],
           color: [
@@ -76,11 +76,32 @@ export default {
   watch: {
     search () {
       if (this.search === '') {
-        this.productsFilter = this.products
+        this.productInit()
       } else {
         this.searchProduct()
       }
       this.showClearIcon()
+    },
+    '$store.state.category' () {
+      if (this.$store.state.category === '') {
+        this.productInit()
+      } else {
+        this.filterProduct()
+      }
+    },
+    '$store.state.minPrice' () {
+      if (this.$store.state.minPrice === 0) {
+        this.productInit()
+      } else {
+        this.filterProduct()
+      }
+    },
+    '$store.state.maxPrice' () {
+      if (this.$store.state.maxPrice === 0) {
+        this.productInit()
+      } else {
+        this.filterProduct()
+      }
     }
   },
   mounted () {
@@ -89,6 +110,9 @@ export default {
   methods: {
     productInit () {
       this.productsFilter = this.products
+      // this.productsFilter.forEach((prod) => {
+      //   prod.price = prod.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+      // })
     },
     searchProduct () {
       this.productsFilter = this.products.filter(prod =>
@@ -105,6 +129,28 @@ export default {
     },
     clearSearch () {
       this.search = ''
+    },
+    // filterCategory () {
+    //   const category = this.$store.state.category
+    //   this.productsFilter = this.products.filter(prod =>
+    //     prod.category === category
+    //   )
+    // },
+    // filterMinPrice () {
+    //   if (this.$store.state.minPrice !== 0) {
+    //     const minPrice = this.$store.state.minPrice
+    //   }
+    // },
+    filterProduct () {
+      const category = this.$store.state.category
+      const minPrice = this.$store.state.minPrice
+      let maxPrice = 1000000000
+      if (this.$store.state.maxPrice !== 0) {
+        maxPrice = this.$store.state.maxPrice
+      }
+      this.productsFilter = this.products.filter(prod =>
+        prod.category === category && prod.price >= minPrice && prod.price <= maxPrice
+      )
     }
   }
 }

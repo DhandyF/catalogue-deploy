@@ -1,0 +1,98 @@
+{
+  "product": [
+    {
+      "id": 1,
+      "name": "Koketo Miter",
+      "price": 159500,
+      "primaryImage": "shoes-redknot.jpg",
+      "images": [
+        "koketo-miter-navy2.jpg",
+        "koketo-miter-navy3.jpg"
+      ],
+      "color": [
+        {
+          "name": "Navi",
+          "image": "koketo-miter-navy3.jpg"
+        },
+        {
+          "name": "Black",
+          "image": "koketo-miter-hitam.jpg"
+        },
+        {
+          "name": "Grey",
+          "image": "koketo-miter-abu.jpg"
+        }
+      ],
+      "category": "shoes",
+      "description": "Koketo Miter Shoes from Redknot"
+    },
+    {
+      "id": 2,
+      "name": "Redknot Koketo York",
+      "price": 135900,
+      "primaryImage": "koketo-york-denim-sol-hitam1.jpg",
+      "images": [
+        "koketo-york-denim-sol-hitam2.jpg",
+        "koketo-york-denim-sol-hitam3.jpg"
+      ],
+      "color": [
+        {
+          "name": "Denim",
+          "image": "koketo-york-denim-sol-hitam3.jpg"
+        },
+        {
+          "name": "Cream",
+          "image": "koketo-york-cream.jpg"
+        }
+      ],
+      "category": "shoes",
+      "description": "Koketo York Shoes from Redknot"
+    },
+    {
+      "id": 3,
+      "name": "Redknot T-Shirt",
+      "price": 99900,
+      "primaryImage": "redknot-t-shirt-navy1.jpg",
+      "images": [
+        "redknot-t-shirt-navy2.jpg"
+      ],
+      "color": [
+        {
+          "name": "Grey",
+          "image": "redknot-t-shirt-abu.jpg"
+        },
+        {
+          "name": "Black",
+          "image": "redknot-t-shirt-hitam.jpg"
+        },
+        {
+          "name": "Navi",
+          "image": "redknot-t-shirt-navy1.jpg"
+        }
+      ],
+      "category": "t-shirt",
+      "description": "T-shirt from Redknot"
+    },
+    {
+      "id": 4,
+      "name": "X-PAVON JACKET",
+      "price": 494100,
+      "primaryImage": "eiger-jaket-coklat1.jpg",
+      "images": [
+        "eiger-jaket-coklat2.jpg"
+      ],
+      "color": [
+        {
+          "name": "Chocolate",
+          "image": "eiger-jaket-coklat1.jpg"
+        },
+        {
+          "name": "Black",
+          "image": "eiger-jaket-hitam.jpg"
+        }
+      ],
+      "category": "jacket",
+      "description": "X-Paveon Jacket from Eiger"
+    }
+  ]
+}

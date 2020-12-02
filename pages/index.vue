@@ -5,17 +5,21 @@
       <a id="search-clear-icon" @click="clearSearch">&#10006;</a>
     </div>
     <div class="product">
-      <div v-for="product in productsFilter" :key="product.id" class="product-card">
-        <img :src="product.primaryImage" alt="product image" class="product-image">
+      <div v-for="product in productsFilter" :key="product.id" class="product-card" @click="productDetail(product.id)">
+        <!-- <img :src="product.primaryImage" alt="product image" class="product-image"> -->
+        <img :src="require(`~/assets/images/${product.primaryImage}`)" alt="product image" class="product-image">
         <div class="product-attr">
           <div class="product-name">
             {{ product.name }}
           </div>
           <div class="product-price">
-            Rp. {{ product.price }}
+            Rp. {{ Number(product.price).toLocaleString('id') }}
           </div>
         </div>
       </div>
+    </div>
+    <div v-if="productsFilter.length === 0" class="not-found">
+      Oops, product not found...
     </div>
   </div>
 </template>
@@ -26,50 +30,7 @@ export default {
   data () {
     return {
       search: '',
-      products: [
-        {
-          id: 1,
-          name: 'Kaos Polos Screamos',
-          price: 50000,
-          primaryImage: require('~/assets/images/kaos-polos.jpg'),
-          images: [],
-          color: [
-            {
-              name: 'Black',
-              image: ''
-            }
-          ],
-          category: 't-shirt'
-        },
-        {
-          id: 2,
-          name: 'Kaos Polos',
-          price: 30000,
-          primaryImage: require('~/assets/images/kaos-polos1.jpg'),
-          images: [],
-          color: [
-            {
-              name: 'Black',
-              image: ''
-            }
-          ],
-          category: 't-shirt'
-        },
-        {
-          id: 3,
-          name: 'Redknot Navi',
-          price: 150000,
-          primaryImage: require('~/assets/images/shoes-redknot.jpg'),
-          images: [],
-          color: [
-            {
-              name: 'Navi',
-              image: ''
-            }
-          ],
-          category: 'shoes'
-        }
-      ],
+      products: [],
       productsFilter: []
     }
   },
@@ -78,7 +39,7 @@ export default {
       if (this.search === '') {
         this.productInit()
       } else {
-        this.searchProduct()
+        this.filterProduct()
       }
       this.showClearIcon()
     },
@@ -105,19 +66,15 @@ export default {
     }
   },
   mounted () {
-    this.productInit()
+    this.loadProducts()
   },
   methods: {
+    async loadProducts () {
+      this.products = await this.$axios.$get('/product')
+      this.productInit()
+    },
     productInit () {
       this.productsFilter = this.products
-      // this.productsFilter.forEach((prod) => {
-      //   prod.price = prod.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-      // })
-    },
-    searchProduct () {
-      this.productsFilter = this.products.filter(prod =>
-        prod.name.toLowerCase().includes(this.search.toLowerCase())
-      )
     },
     showClearIcon () {
       const clearIcon = document.getElementById('search-clear-icon')
@@ -136,13 +93,21 @@ export default {
       const maxPrice = this.$store.state.maxPrice
       if (this.$store.state.maxPrice !== 0) {
         this.productsFilter = this.products.filter(prod =>
-          prod.category.toLowerCase().includes(category.toLowerCase()) && prod.price >= minPrice && prod.price <= maxPrice
+          prod.name.toLowerCase().includes(this.search.toLowerCase()) &&
+          prod.category.toLowerCase().includes(category.toLowerCase()) &&
+          prod.price >= minPrice &&
+          prod.price <= maxPrice
         )
       } else {
         this.productsFilter = this.products.filter(prod =>
-          prod.category.toLowerCase().includes(category.toLowerCase()) && prod.price >= minPrice
+          prod.name.toLowerCase().includes(this.search.toLowerCase()) &&
+          prod.category.toLowerCase().includes(category.toLowerCase()) &&
+          prod.price >= minPrice
         )
       }
+    },
+    productDetail (productId) {
+      this.$router.push('/product/' + productId)
     }
   }
 }
@@ -255,5 +220,16 @@ export default {
   font-family: 'Quicksand-Bold', sans-serif;
   color: #FA591D;
   font-size: 18px;
+}
+
+.not-found {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Quicksand-Bold', sans-serif;
+  font-size: 20px;
+  color: #5c4050;
 }
 </style>

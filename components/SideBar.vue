@@ -265,7 +265,7 @@ export default {
 }
 
 .price-button {
-  margin: 10px 0 0 0;
+  margin-top: 10px;
   padding: 5px 30px;
   display: inline-block;
   border-radius: 10px;

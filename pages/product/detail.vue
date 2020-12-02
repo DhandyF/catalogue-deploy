@@ -1,62 +1,104 @@
 <template>
   <div class="product-container">
-    <div class="product-image">
-      <div class="carousel">
-        <div class="carousel-item fade">
-          <div class="item-number">
-            1/3
-          </div>
-          <img class="item-image" src="~/assets/images/kaos-polos.jpg" alt="test1">
-        </div>
-        <div class="carousel-item fade">
-          <div class="item-number">
-            2/3
-          </div>
-          <img class="item-image" src="~/assets/images/test-carousel2.jpg" alt="test2">
-        </div>
-        <div class="carousel-item fade">
-          <div class="item-number">
-            3/3
-          </div>
-          <img class="item-image" src="~/assets/images/test-carousel3.jpg" alt="test3">
-        </div>
-        <a class="prev-item" @click="plusSlide(-1)">&#10094;</a>
-        <a class="next-item" @click="plusSlide(1)">&#10095;</a>
-      </div>
-      <div id="image-group">
-        <img v-for="i in 7" :key="i" class="image" src="~/assets/images/kaos-polos.jpg" alt="kaos-polos">
-        <a class="prev-image" @click="scrollLeft">&#10094;</a>
-        <a class="next-image" @click="scrollRight">&#10095;</a>
-        <!-- <span class="dot" @click="currentSlide(1)"></span>
-        <span class="dot" @click="currentSlide(2)"></span>
-        <span class="dot" @click="currentSlide(3)"></span> -->
-      </div>
+    <div class="breadcrumb">
+      <ul>
+        <li>
+          <a href="/">Catalogue</a>
+        </li>
+        <li>
+          {{ product.name }}
+        </li>
+      </ul>
     </div>
-    <div class="product-detail">
-      <div class="product-name">
-        Kaos Polos Screamous
+    <div class="product-content">
+      <div class="product-image">
+        <div class="carousel">
+          <!-- <div class="carousel-item fade">
+            <img class="item-image" src="~/assets/images/kaos-polos.jpg" alt="test1">
+          </div>
+          <div class="carousel-item fade">
+            <img class="item-image" src="~/assets/images/test-carousel2.jpg" alt="test2">
+          </div>
+          <div class="carousel-item fade">
+            <img class="item-image" src="~/assets/images/test-carousel3.jpg" alt="test3">
+          </div> -->
+          <div class="carousel-item fade">
+            <img class="item-image" :src="product.primaryImage" alt="product image">
+          </div>
+          <div
+            v-for="image in product.images"
+            :key="'c-'+image"
+            class="carousel-item fade"
+          >
+            <img class="item-image" :src="image" alt="product image">
+          </div>
+          <div
+            v-for="color in product.color"
+            :key="'c-'+color.name"
+            class="carousel-item fade"
+          >
+            <img class="item-image" :src="color.image" alt="product image">
+          </div>
+          <a class="prev-item" @click="plusSlide(-1)">&#10094;</a>
+          <a class="next-item" @click="plusSlide(1)">&#10095;</a>
+        </div>
+        <div id="image-group">
+          <img class="image" :src="product.primaryImage" alt="product image" @click="showImage(1)">
+          <img
+            v-for="(image, index) in product.images"
+            :key="image"
+            class="image"
+            :src="image"
+            alt="product image"
+            @click="showImage(index + 2)"
+          >
+          <img
+            v-for="(color, index) in product.color"
+            :key="color.name"
+            class="image"
+            :src="color.image"
+            alt="product image"
+            @click="showImage(product.images.length + index + 2)"
+          >
+          <!-- <img v-for="i in 7" :key="i" class="image" src="~/assets/images/kaos-polos.jpg" alt="kaos-polos"> -->
+          <a class="prev-image" @click="scrollLeft">&#10094;</a>
+          <a class="next-image" @click="scrollRight">&#10095;</a>
+        </div>
       </div>
-      <div class="product-price">
-        <div class="label">
-          Price
+      <div class="product-detail">
+        <div class="product-name">
+          {{ product.name }}
         </div>
-        <div class="price">
-          Rp. 30.000
+        <div class="product-price">
+          <div class="label">
+            Price
+          </div>
+          <div class="price">
+            Rp. {{ product.price }}
+          </div>
         </div>
-      </div>
-      <div class="product-color">
-        <div class="label">
-          Color
+        <div class="product-color">
+          <div class="label">
+            Color
+          </div>
+          <div class="color">
+            <button
+              v-for="(color, index) in product.color"
+              :key="'v-'+color.name"
+              @click="showImage(product.images.length + index + 2)"
+              class="product-color-btn"
+            >
+              {{ color.name }}
+            </button>
+          </div>
         </div>
-        <div class="color">
-        </div>
-      </div>
-      <div class="product-desc">
-        <div class="label">
-          Description
-        </div>
-        <div class="desc">
-          Cotton t-shirt
+        <div class="product-desc">
+          <div class="label">
+            Description
+          </div>
+          <div class="desc">
+            {{ product.description }}
+          </div>
         </div>
       </div>
     </div>
@@ -68,7 +110,33 @@ export default {
   layout: 'product',
   data () {
     return {
-      slideIndex: 1
+      slideIndex: 1,
+      product: {
+        id: 3,
+        name: 'Redknot Navi',
+        price: 150000,
+        primaryImage: require('~/assets/images/shoes-redknot.jpg'),
+        images: [
+          require('~/assets/images/koketo-miter-navy2.jpg'),
+          require('~/assets/images/koketo-miter-navy3.jpg')
+        ],
+        color: [
+          {
+            name: 'Navi',
+            image: require('~/assets/images/koketo-miter-navy3.jpg')
+          },
+          {
+            name: 'Black',
+            image: require('~/assets/images/koketo-miter-hitam.jpg')
+          },
+          {
+            name: 'Grey',
+            image: require('~/assets/images/koketo-miter-abu.jpg')
+          }
+        ],
+        category: 'shoes',
+        description: ''
+      }
     }
   },
   mounted () {
@@ -93,12 +161,15 @@ export default {
       slides[this.slideIndex - 1].style.display = 'flex'
       // dots[this.slideIndex - 1].className += ' active'
     },
-    plusSlide (n) {
-      this.showSlide(this.slideIndex += n)
+    showImage (slideIndex) {
+      this.showSlide(this.slideIndex = slideIndex)
     },
-    currentSlide (n) {
-      this.slideIndex = n
-      this.showSlide(n)
+    plusSlide (slideIndex) {
+      this.showSlide(this.slideIndex += slideIndex)
+    },
+    currentSlide (slideIndex) {
+      this.slideIndex = slideIndex
+      this.showSlide(slideIndex)
     },
     scrollRight () {
       const imgElement = document.getElementById('image-group')
@@ -137,16 +208,70 @@ export default {
   width: 100%;
   margin: 0;
   display: flex;
+  flex-direction: column;
   /* border: 1px solid blue; */
 }
 
-.product-container .product-image {
+.product-content {
+  display: flex;
+  width: 100%;
+  margin: 0;
+}
+
+.breadcrumb {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.breadcrumb ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  float: left;
+  font-family: 'Quicksand-SemiBold', sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  color:#5c4050;
+}
+
+.breadcrumb li a {
+  display: block;
+  padding-right: 10px;
+  color: #FA591D;
+  font-family: 'Quicksand-Medium', sans-serif;
+  text-decoration: none;
+  height: 20px;
+  position: relative;
+}
+
+.breadcrumb li a:hover {
+  font-weight: 700;
+  color: #5c4050;
+}
+
+.breadcrumb li a::after {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  color: #5c4050;
+  content: "\276F";
+}
+
+.product-content .product-image {
   width: 40%;
   min-width: 250px;
   /* border: 1px solid blue; */
 }
 
-.product-container .product-detail {
+.product-content .product-detail {
   width: 60%;
   padding: 0 0 0 50px;
   display: flex;
@@ -168,6 +293,36 @@ export default {
   padding: 20px 0;
   display: flex;
   border-bottom: 1px solid lightgrey;
+}
+
+.color {
+  display: flex;
+}
+
+.product-color-btn {
+  margin-right: 10px;
+  padding: 10px 15px;
+  font-family: 'Quicksand-SemiBold', sans-serif;
+  display: inline-block;
+  border-radius: 10px;
+  border: 1px solid lightgrey;
+  color: rgba(92, 64, 80, .7);
+  background-color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.product-color-btn:hover {
+  color: #5c4050;
+  font-family: 'Quicksand-Bold', sans-serif;
+  border: 1px solid #5c4050;
+}
+
+.product-color-btn:focus {
+  outline: none;
+  font-family: 'Quicksand-Bold', sans-serif;
+  border: 1px solid #5c4050;
+  color: #5c4050;
 }
 
 .label {
@@ -206,14 +361,6 @@ export default {
   align-items: center;
   background-color: white;
   border-radius: inherit;
-}
-
-.item-number {
-  color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
-  position: absolute;
-  top: 0;
 }
 
 .item-image {

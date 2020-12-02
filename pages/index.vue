@@ -130,27 +130,19 @@ export default {
     clearSearch () {
       this.search = ''
     },
-    // filterCategory () {
-    //   const category = this.$store.state.category
-    //   this.productsFilter = this.products.filter(prod =>
-    //     prod.category === category
-    //   )
-    // },
-    // filterMinPrice () {
-    //   if (this.$store.state.minPrice !== 0) {
-    //     const minPrice = this.$store.state.minPrice
-    //   }
-    // },
     filterProduct () {
       const category = this.$store.state.category
       const minPrice = this.$store.state.minPrice
-      let maxPrice = 1000000000
+      const maxPrice = this.$store.state.maxPrice
       if (this.$store.state.maxPrice !== 0) {
-        maxPrice = this.$store.state.maxPrice
+        this.productsFilter = this.products.filter(prod =>
+          prod.category.toLowerCase().includes(category.toLowerCase()) && prod.price >= minPrice && prod.price <= maxPrice
+        )
+      } else {
+        this.productsFilter = this.products.filter(prod =>
+          prod.category.toLowerCase().includes(category.toLowerCase()) && prod.price >= minPrice
+        )
       }
-      this.productsFilter = this.products.filter(prod =>
-        prod.category === category && prod.price >= minPrice && prod.price <= maxPrice
-      )
     }
   }
 }

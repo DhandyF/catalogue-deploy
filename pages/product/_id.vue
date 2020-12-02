@@ -1,5 +1,6 @@
 <template>
   <div class="product-container">
+    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <ul>
         <li>
@@ -10,8 +11,11 @@
         </li>
       </ul>
     </div>
+    <!-- Detail Product -->
     <div class="product-content">
+      <!-- Product Image -->
       <div class="product-image">
+        <!-- Carousel -->
         <div class="carousel">
           <div class="carousel-item fade">
             <img class="item-image" :src="require(`~/assets/images/${product.primaryImage}`)" alt="product image">
@@ -33,6 +37,7 @@
           <a class="prev-item" @click="plusSlide(-1)">&#10094;</a>
           <a class="next-item" @click="plusSlide(1)">&#10095;</a>
         </div>
+        <!-- Small Image -->
         <div id="image-group">
           <img class="image" :class="slideIndex === 1 ? 'image-focus' : ''" :src="require(`~/assets/images/${product.primaryImage}`)" alt="product image" @click="showImage(1)">
           <img
@@ -57,6 +62,7 @@
           <a class="next-image" @click="scrollRight">&#10095;</a>
         </div>
       </div>
+      <!-- Product Detail -->
       <div class="product-detail">
         <div class="product-name">
           {{ product.name }}

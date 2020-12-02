@@ -3,11 +3,6 @@
     <nuxt-link to="/" class="brand">
       Catalogue
     </nuxt-link>
-    <!-- <nav>
-      <nuxt-link to="/product/detail">
-        Home
-      </nuxt-link>
-    </nav> -->
   </div>
 </template>
 

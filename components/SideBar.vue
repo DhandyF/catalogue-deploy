@@ -48,7 +48,6 @@ export default {
       category: '',
       minPrice: null,
       maxPrice: null
-      // showClearFilter: false
     }
   },
   computed: {
@@ -60,15 +59,6 @@ export default {
       }
     }
   },
-  // watch: {
-  //   category () {
-  //     if (this.category !== '') {
-  //       this.showClearFilter = true
-  //     } else {
-  //       this.showClearFilter = false
-  //     }
-  //   }
-  // },
   methods: {
     showCategoryFilter () {
       const catLabel = document.getElementById('category-label')
@@ -137,7 +127,6 @@ export default {
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-  /* border: 1px solid yellow; */
 }
 
 .filter-header {

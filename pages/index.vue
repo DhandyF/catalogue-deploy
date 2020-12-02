@@ -1,12 +1,13 @@
 <template>
   <div class="catalog-container">
+    <!-- Search Bar -->
     <div class="search-bar">
       <input v-model="search" type="text" placeholder="Search product" name="search">
       <a id="search-clear-icon" @click="clearSearch">&#10006;</a>
     </div>
+    <!-- Product -->
     <div class="product">
       <div v-for="product in productsFilter" :key="product.id" class="product-card" @click="productDetail(product.id)">
-        <!-- <img :src="product.primaryImage" alt="product image" class="product-image"> -->
         <img :src="require(`~/assets/images/${product.primaryImage}`)" alt="product image" class="product-image">
         <div class="product-attr">
           <div class="product-name">
@@ -18,6 +19,7 @@
         </div>
       </div>
     </div>
+    <!-- Not Found -->
     <div v-if="productsFilter.length === 0" class="not-found">
       Oops, product not found...
     </div>
@@ -125,7 +127,6 @@ export default {
   align-items: center;
   width: 100%;
   margin: 0 0 30px 0;
-  /* border: 1px solid green; */
 }
 
 .search-bar input {
@@ -149,7 +150,6 @@ export default {
   width: 20px;
   height: 20px;
   border: 1px solid lightgrey;
-  /* border-radius: 0 5px 5px 0; */
   background-size: 20px 20px;
 }
 
@@ -189,7 +189,6 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
   cursor: pointer;
-  /* border: 1px solid grey; */
 }
 
 .product-card:hover {

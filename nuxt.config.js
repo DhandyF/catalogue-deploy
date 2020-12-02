@@ -39,7 +39,9 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: 'https://my-json-server.typicode.com/DhandyF/Catalogue',
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

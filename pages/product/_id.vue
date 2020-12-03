@@ -110,7 +110,7 @@ export default {
     const id = context.params.id
     try {
       const product = await context.app.$axios.$get(
-        `https://my-json-server.typicode.com/DhandyF/catalogue-deploy/${id}`
+        `https://my-json-server.typicode.com/DhandyF/catalogue-deploy/product/${id}`
       )
       return { product }
     } catch (e) {
